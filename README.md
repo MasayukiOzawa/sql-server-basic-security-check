@@ -37,3 +37,28 @@ Codex での URL 登録・スキル検出は実機インストール未検証で
 インストール後も Windows、PowerShell、ODBC 版 sqlcmd と対応 ODBC Driver が必要です。インストール時に SQL 接続やチェックの実行は行いません。
 
 仕様: [プラグイン定義](https://code.claude.com/docs/en/plugins-reference)、[マーケットプレイス](https://code.claude.com/docs/en/plugin-marketplaces)。
+
+## スラッシュコマンド
+
+Claude Code のプラグインコマンド（プラグイン更新後）:
+
+```text
+/sql-server-basic-security-check:check 全項目をチェックして HTML レポートを作成してください。
+```
+
+Codex CLI／IDE のカスタムプロンプト（非推奨の互換方式）:
+
+```powershell
+New-Item -ItemType Directory -Path "$HOME/.codex/prompts" -Force
+Copy-Item ./prompts/sql-server-basic-security-check.md "$HOME/.codex/prompts/"
+```
+
+既存の同名ファイルがある場合は内容を確認してから更新してください。新しいセッションで次のコマンドを使用します。
+
+```text
+/prompts:sql-server-basic-security-check 全項目をチェックして HTML レポートを作成してください。
+```
+
+Codex のカスタムプロンプトはローカル登録であり、プラグインのインストールだけでは登録されません。Desktop での表示・実行は未検証です。通常は `$sql-server-basic-security-check` を使用してください。パスワードやトークンを引数に含めないでください。
+
+仕様: [Codex Custom Prompts](https://learn.chatgpt.com/docs/custom-prompts)、[Claude コマンド定義](https://code.claude.com/docs/en/plugins-reference#commands)。
