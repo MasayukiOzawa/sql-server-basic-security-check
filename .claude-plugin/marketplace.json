@@ -1,0 +1,16 @@
+{
+  "name": "sql-server-security-marketplace",
+  "owner": {
+    "name": "Masayuki Ozawa"
+  },
+  "plugins": [
+    {
+      "name": "sql-server-basic-security-check",
+      "source": "./",
+      "description": "Read-only Microsoft SQL Server basic security checks with linked HTML reports."
+    }
+  ],
+  "metadata": {
+    "description": "Microsoft SQL Server basic security check skills."
+  }
+}
