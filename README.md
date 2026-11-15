@@ -17,7 +17,7 @@ SPDX 識別子は `MIT` です。条件と免責事項の全文は [LICENSE](LIC
 
 ## プラグインとマーケットプレイス
 
-`.claude-plugin/plugin.json` にプラグイン定義、`.claude-plugin/marketplace.json` にマーケットプレイス定義を配置しています。プラグインとスキルのルートはリポジトリ直下です。`skills: ["."]` で直下の `SKILL.md` を参照します。
+`plugin.json` に標準プラグイン定義、`.codex-plugin/plugin.json` に Codex 互換定義、`.claude-plugin/` に Claude 互換定義とマーケットプレイスを配置しています。プラグインのルートはリポジトリ直下です。検出用の入口は `skills/security-check/SKILL.md` で、ルートの `SKILL.md` と既存の診断処理を参照します。スキル識別子は `sql-server-basic-security-check` です。
 
 マーケットプレイスの Git URL:
 
@@ -32,13 +32,34 @@ Claude Code での登録・インストール:
 /plugin install sql-server-basic-security-check@sql-server-security-marketplace
 ```
 
-Codex での URL 登録・スキル検出は実機インストール未検証です。上記は Claude 互換マニフェストであり、Codex 固有の定義を検証済みとするものではありません。
+Codex Desktop では、この Git URL をマーケットプレイスとして登録し、`sql-server-basic-security-check` をインストール・有効化してください。CLI から登録する場合:
+
+```powershell
+codex plugin marketplace add https://github.com/MasayukiOzawa/sql-server-basic-security-check.git
+```
+
+1.1.0 から更新する場合はマーケットプレイスを更新し、プラグインを更新（更新操作がなければ再インストール）してください。CLI でマーケットプレイスを更新する場合は `codex plugin marketplace upgrade sql-server-security-marketplace` を使用します。キャッシュのマニフェストが **1.2.0** になり、`skills/security-check/SKILL.md` が存在することを確認してください。マーケットプレイスの更新だけでインストール済みコピーが更新されたと判断しないでください。
+
+更新後は Desktop を再起動し、新しいチャットを開始してください。既存チャットのスキル一覧には反映されない場合があります。
 
 インストール後も Windows、PowerShell、ODBC 版 sqlcmd と対応 ODBC Driver が必要です。インストール時に SQL 接続やチェックの実行は行いません。
 
 仕様: [プラグイン定義](https://code.claude.com/docs/en/plugins-reference)、[マーケットプレイス](https://code.claude.com/docs/en/plugin-marketplaces)。
 
 ## スラッシュコマンド
+
+Codex Desktop では `/` を入力し、`SQL Server Basic Security Check` または `sql-server-basic-security-check` で候補を絞り込んでスキルを選択します。公式仕様では有効なスキルがスラッシュ候補に表示されます。表示名や候補の形式はクライアントによるため、候補から選択してください。カスタムプロンプトの手動コピーは不要です。
+
+`@` はプラグインの選択、`/` は有効なスキルの選択です。`@` に表示されるだけではスキル検出の確認になりません。更新後も `/` に表示されない場合は、新しいチャットのスキル一覧、プラグインの有効状態、キャッシュ内のバージョンと入口ファイルを確認してください。別端末の Desktop UI での表示確認は導入先で必要です。
+
+選択後の依頼例:
+
+```text
+接続先 localhost、Windows 認証で全項目を実行し、HTML レポートを作成してください。
+```
+
+仕様: [Codex スラッシュコマンド](https://learn.chatgpt.com/docs/reference/slash-commands)、[プラグインの配布構成](https://developers.openai.com/plugins/build/plugins)。
+
 
 Claude Code のプラグインコマンド（プラグイン更新後）:
 
