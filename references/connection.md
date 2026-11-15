@@ -36,7 +36,7 @@ $parameters = @{
     Database = 'master'
     Checks = @('xp_cmdshell')
 }
-# sql-server-basic-security-check フォルダーから実行。まずはプレビュー（入力や接続は発生しない）。
+# リポジトリルートから実行。まずはプレビュー（入力や接続は発生しない）。
 ./scripts/Invoke-SecurityChecks.ps1 @parameters -Authentication Sql -UserName 'audit_login'
 # sqlcmd の非表示パスワードプロンプトに入力する。
 ./scripts/Invoke-SecurityChecks.ps1 @parameters -Authentication Sql -UserName 'audit_login' -Execute

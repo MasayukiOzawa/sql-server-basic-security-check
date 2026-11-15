@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-. (Join-Path $PSScriptRoot '../sql-server-basic-security-check/scripts/SqlPrerequisites.ps1')
+. (Join-Path $PSScriptRoot '../scripts/SqlPrerequisites.ps1')
 $baseline = @{
     Windows = $true; PowerShellVersion = [version]'7.0'
     SqlcmdPath = 'fixture.exe'; SqlcmdVersion = [version]'15.0.4298.1'; OdbcSqlcmd = $true
@@ -40,9 +40,9 @@ foreach ($case in $cases) {
 foreach ($execute in @($false, $true)) {
     $caught = $false
     try {
-        & (Join-Path $PSScriptRoot '../sql-server-basic-security-check/scripts/Invoke-SqlQuery.ps1') `
+        & (Join-Path $PSScriptRoot '../scripts/Invoke-SqlQuery.ps1') `
             -ServerInstance 'preview.invalid' -Database 'master' `
-            -QueryFile (Join-Path $PSScriptRoot '../sql-server-basic-security-check/assets/queries/check-xp-cmdshell.sql') `
+            -QueryFile (Join-Path $PSScriptRoot '../assets/queries/check-xp-cmdshell.sql') `
             -SqlcmdPath 'missing-sqlcmd-prerequisite-test.exe' -Execute:$execute
     } catch {
         $caught = $true

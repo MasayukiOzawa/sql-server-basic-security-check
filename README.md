@@ -3,8 +3,8 @@
 Microsoft SQL Server の基本セキュリティチェックを行う AI スキルです。
 ローカルの PowerShell と ODBC 版 sqlcmd を使用し、設定情報やログを読み取ってレポートを作成します。
 
-スキルの入口は [sql-server-basic-security-check/SKILL.md](sql-server-basic-security-check/SKILL.md) です。
-実行環境・接続方法は [接続設定](sql-server-basic-security-check/references/connection.md)、実行方法は [クエリ実行手順](sql-server-basic-security-check/references/query-execution.md) を参照してください。
+スキルの入口は [SKILL.md](SKILL.md) です。
+実行環境・接続方法は [接続設定](references/connection.md)、実行方法は [クエリ実行手順](references/query-execution.md) を参照してください。
 
 ## ライセンス
 

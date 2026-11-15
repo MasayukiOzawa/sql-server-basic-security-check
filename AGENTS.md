@@ -1,7 +1,7 @@
 # リポジトリの基本前提
 
 このリポジトリは、Microsoft SQL Server の基本セキュリティチェックを行う AI スキルを管理する。
-スキルの入口は [sql-server-basic-security-check/SKILL.md](sql-server-basic-security-check/SKILL.md)。スキルを実行・更新する際は、対象項目の定義と参照先も読む。
+スキルの入口は [SKILL.md](SKILL.md)。スキルを実行・更新する際は、対象項目の定義と参照先も読む。
 
 ## スコープと判定
 
@@ -24,7 +24,7 @@
 
 - Windows、PowerShell、ODBC 版 sqlcmd と対応する ODBC Driver を利用する。Go 版 sqlcmd は現在の実装対象外。
 - バージョン番号による下限チェックや更新の強制は行わない。実行に必要なコマンド、対応 DLL、CPU アーキテクチャ、対話環境を確認する。
-- [Invoke-SecurityChecks.ps1](sql-server-basic-security-check/scripts/Invoke-SecurityChecks.ps1) をスキルの共通入口とする。接続先確認と選択項目を1接続で処理し、認証の重複を避ける。接続確認だけを別実行しない。既定はプレビュー、`-Execute` 指定時に接続・実行する。両方でローカル前提チェックを行い、不足時は停止して対応方法を案内する。
+- [Invoke-SecurityChecks.ps1](scripts/Invoke-SecurityChecks.ps1) をスキルの共通入口とする。接続先確認と選択項目を1接続で処理し、認証の重複を避ける。接続確認だけを別実行しない。既定はプレビュー、`-Execute` 指定時に接続・実行する。両方でローカル前提チェックを行い、不足時は停止して対応方法を案内する。
 - プレビュー成功は DB 接続や診断の成功を意味しない。通信・認証・権限等のエラーは実行時に確認し、未判定として報告する。
 - 接続先、データベース、認証方式、必要なユーザー名は既存の会話や明示された設定を利用し、不足分だけを尋ねる。過去の接続先をコードやスキルの既定値に埋め込まない。
 - 認証方式は Windows、SQL 認証、Microsoft Entra MFA。ユーザーが指定した方式を自動で変更しない。
@@ -32,11 +32,11 @@
 - ユーザー指定により、すべての認証方式で `-N -C` を使用する。暗号化を要求し、サーバー証明書の信頼チェーン・名前の検証はスキップする。OS の証明書ストアは変更しない。
 - 実行環境のネットワーク制限による失敗と、接続先の障害を区別する。制限下の接続失敗だけでサーバー停止と断定せず、利用可能な承認・実行手段に従って切り分ける。
 
-接続の詳細は [connection.md](sql-server-basic-security-check/references/connection.md)、実行と報告は [query-execution.md](sql-server-basic-security-check/references/query-execution.md) を参照する。
+接続の詳細は [connection.md](references/connection.md)、実行と報告は [query-execution.md](references/query-execution.md) を参照する。
 
 ## レポート出力
 
-- スキル実行後は [レポート出力手順](sql-server-basic-security-check/references/report-output.md) に従い、取得済みの結果からレポートファイルを生成する。既定は作業ディレクトリの reports 配下に UTF-8 HTML。指定形式・保存先を優先し、既存ファイルは上書きしない。
+- スキル実行後は [レポート出力手順](references/report-output.md) に従い、取得済みの結果からレポートファイルを生成する。既定は作業ディレクトリの reports 配下に UTF-8 HTML。指定形式・保存先を優先し、既存ファイルは上書きしない。
 - 全対象行・判定根拠・未確認事項・変更の有無を記載し、保存後に内容を検証して絶対パスのリンクを返す。レポート生成だけの再接続は行わない。秘密情報は保存しない。
 
 - 各チェックの詳細節の冒頭に「チェックの目的」を記載し、なぜ確認するのかを説明する。目的と実際の判定根拠を区別し、目的を理由に未指定の診断を追加しない。チェック追加時は目的の説明も更新する。

@@ -4,8 +4,8 @@ $scripts = Join-Path $root 'scripts'
 $queries = Join-Path $root 'assets/queries'
 New-Item -ItemType Directory -Path $scripts, $queries -Force | Out-Null
 try {
-    Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../sql-server-basic-security-check/scripts/Invoke-SecurityChecks.ps1') -Destination $scripts
-    Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '../sql-server-basic-security-check/assets/queries') -Filter '*.sql' |
+    Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../scripts/Invoke-SecurityChecks.ps1') -Destination $scripts
+    Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '../assets/queries') -Filter '*.sql' |
         Copy-Item -Destination $queries
     # Isolated recording runner: no real sqlcmd or network access.
     @'

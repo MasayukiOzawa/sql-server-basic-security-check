@@ -13,7 +13,7 @@
 スキルの実行には [Invoke-SecurityChecks.ps1](../scripts/Invoke-SecurityChecks.ps1) を使用する。接続確認だけを別途実行しない。
 接続情報と選択したチェックを1つのバッチにまとめ、既存の実行処理を1回だけ呼び出す。既定では実装済み14項目を実行する。
 
-以下は sql-server-basic-security-check フォルダーをカレントディレクトリにした例。接続先とユーザー名を実際の対象に置き換える。
+以下は リポジトリルートをカレントディレクトリにした例。接続先とユーザー名を実際の対象に置き換える。
 
 ```powershell
 $parameters = @{
@@ -78,7 +78,7 @@ MFA の画面数や追加操作は認証サービスのポリシーに依存す�
 
 `QueryFile` を対象項目のファイルに置き換え、同じプレビュー・実行手順を使う。
 
-| 項目 | QueryFile（sql-server-basic-security-check フォルダー基準） |
+| 項目 | QueryFile（リポジトリルート基準） |
 | --- | --- |
 | Ole Automation Procedures | `./assets/queries/check-ole-automation-procedures.sql` |
 | clr enabled | `./assets/queries/check-clr-enabled.sql` |
