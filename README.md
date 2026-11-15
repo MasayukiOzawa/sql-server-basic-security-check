@@ -14,3 +14,26 @@ SPDX 識別子は `MIT` です。条件と免責事項の全文は [LICENSE](LIC
 
 参照先の Microsoft ドキュメントや外部ソフトウェアには、それぞれの権利・ライセンスが適用されます。
 診断先から取得したログやレポート内のデータについて、このライセンスは公開・再配布の権限を付与するものではありません。
+
+## プラグインとマーケットプレイス
+
+`.claude-plugin/plugin.json` にプラグイン定義、`.claude-plugin/marketplace.json` にマーケットプレイス定義を配置しています。プラグインとスキルのルートはリポジトリ直下です。`skills: ["."]` で直下の `SKILL.md` を参照します。
+
+マーケットプレイスの Git URL:
+
+```text
+https://github.com/MasayukiOzawa/sql-server-basic-security-check.git
+```
+
+Claude Code での登録・インストール:
+
+```text
+/plugin marketplace add https://github.com/MasayukiOzawa/sql-server-basic-security-check.git
+/plugin install sql-server-basic-security-check@sql-server-security-marketplace
+```
+
+Codex での URL 登録・スキル検出は実機インストール未検証です。上記は Claude 互換マニフェストであり、Codex 固有の定義を検証済みとするものではありません。
+
+インストール後も Windows、PowerShell、ODBC 版 sqlcmd と対応 ODBC Driver が必要です。インストール時に SQL 接続やチェックの実行は行いません。
+
+仕様: [プラグイン定義](https://code.claude.com/docs/en/plugins-reference)、[マーケットプレイス](https://code.claude.com/docs/en/plugin-marketplaces)。
