@@ -9,6 +9,7 @@ description: "Microsoft SQL Server の基本セキュリティチェックを支
 ユーザーが指定するチェック項目・判定基準に沿って、読み取り SQL で基本セキュリティチェックを行う。
 実装済みのチェックを利用し、新しい項目は以降の指示に合わせて追加する。チェック項目や判定基準を独自に補わない。
 Windows 認証・SQL 認証・Microsoft Entra MFA と ODBC 版 `sqlcmd` を利用する。SQL 認証のパスワード入力と Entra MFA はユーザーの対話操作で行う。秘密情報をチャットで求めない。
+Windows 認証では実行前に [実行ユーザー確認](references/connection.md#windows-認証の実行ユーザー確認) を行う。`codexsandboxoffline` 等のサンドボックス用アカウントでは接続せず、正式な承認手段で目的のユーザーの実行環境を利用するか、ユーザー自身の PowerShell で実行する手順を案内する。実行制限を迂回しない。
 
 ## 実装済みのチェック
 
