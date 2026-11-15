@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sql-server-basic-security-check",
+  "version": "1.2.0",
+  "description": "Read-only Microsoft SQL Server basic security checks with linked HTML reports.",
+  "author": { "name": "Masayuki Ozawa" },
+  "repository": "https://github.com/MasayukiOzawa/sql-server-basic-security-check",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "SQL Server Basic Security Check",
+        "shortDescription": "SQL Server の基本セキュリティチェックと結果報告",
+        "developerName": "Masayuki Ozawa",
+        "category": "Productivity"
+      }
+    }
+  }
+}
