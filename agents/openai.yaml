@@ -1,4 +1,4 @@
 interface:
-  display_name: "SQL Server 基本セキュリティチェック"
+  display_name: "SQL Server Basic Security Check"
   short_description: "SQL Server の基本セキュリティチェックを定義し、実行結果を報告"
   default_prompt: "$sql-server-basic-security-check を使って、指定されたチェック項目と判定基準に沿って SQL Server の基本セキュリティチェックを進めてください。"
