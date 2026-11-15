@@ -1,0 +1,16 @@
+# Diagnostic results and raw server logs
+/reports/
+
+# Local secrets and environment settings
+.env
+.env.*
+!.env.example
+
+# Temporary files and caches
+__pycache__/
+*.py[cod]
+*.tmp
+*.temp
+*.bak
+Thumbs.db
+.DS_Store
