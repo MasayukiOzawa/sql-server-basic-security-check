@@ -1,6 +1,6 @@
 {
   "name": "sql-server-basic-security-check",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Read-only Microsoft SQL Server basic security checks with linked HTML reports.",
   "author": {
     "name": "Masayuki Ozawa"
@@ -15,5 +15,8 @@
   ],
   "skills": [
     "."
+  ],
+  "commands": [
+    "./commands/check.md"
   ]
 }
