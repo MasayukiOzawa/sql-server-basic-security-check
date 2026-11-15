@@ -6,6 +6,21 @@ Microsoft SQL Server の基本セキュリティチェックを行う AI スキ�
 スキルの入口は [SKILL.md](SKILL.md) です。
 実行環境・接続方法は [接続設定](references/connection.md)、実行方法は [クエリ実行手順](references/query-execution.md) を参照してください。
 
+## 実行環境の前提
+
+| 項目 | 前提 |
+| --- | --- |
+| 実行環境 | 対象 SQL Server に接続できる Windows 上のローカル実行環境。Desktop を操作する端末と、コマンドの実行先が一致するか確認してください。 |
+| PowerShell | PowerShell 7 を使用します。 |
+| SQL クライアント | ODBC 版 sqlcmd と、その実行ファイルに対応する ODBC Driver・DLL・CPU アーキテクチャが必要です。Go 版 sqlcmd は対象外です。 |
+| 接続情報と権限 | 実際のサーバー名・インスタンス名または TCP ポート、認証方式、各チェックに必要な参照権限を確認してください。 |
+| Windows 認証 | sqlcmd の実行ユーザーの資格情報を使います。`codexsandboxoffline` 等の場合は接続を停止し、正式な承認手段またはユーザー自身の PowerShell で実行します。 |
+| SQL 認証 | パスワードを入力できる対話ターミナルが必要です。 |
+| Microsoft Entra MFA | 対応する接続先と、ユーザーがサインイン画面を操作できる対話デスクトップが必要です。 |
+
+バージョン番号による下限チェックや更新の強制は行わず、実行に必要な機能を前提チェックで確認します。プレビュー成功は接続・認証・診断の成功を意味しません。
+すべての認証方式で `-N -C` を使用し、暗号化を要求しつつサーバー証明書の信頼チェーン・名前の検証を省略します。診断は読み取りのみで、設定変更は行いません。
+
 ## ライセンス
 
 このリポジトリのスキル定義、スクリプト、SQL、テストおよび独自ドキュメントは **MIT License** で提供します。
@@ -46,7 +61,22 @@ codex plugin marketplace add https://github.com/MasayukiOzawa/sql-server-basic-s
 
 仕様: [プラグイン定義](https://code.claude.com/docs/en/plugins-reference)、[マーケットプレイス](https://code.claude.com/docs/en/plugin-marketplaces)。
 
-## スラッシュコマンド
+## `/` と `@` での選択方法
+
+### `/` からスキルを選択する
+
+1. インストール・有効化後、新しいチャットの入力欄に `/` を入力します。
+2. `SQL Server Basic Security Check` または `sql-server-basic-security-check` で候補を絞り込み、対象スキルを選択します。
+3. 続けて、下記のサンプルプロンプトを入力して送信します。
+
+### Work で `@` からプラグインを選択する
+
+1. Work の入力欄に `@` を入力します。
+2. `sql-server-basic-security-check` を検索し、対象プラグインを候補から選択します。
+3. 続けて、下記のサンプルプロンプトを入力して送信します。
+
+どちらも UI の候補から選択してください。`/sql-server-basic-security-check` などの文字列を入力するだけで選択が成立するとは限りません。`@` の候補にはプラグイン内のスキルが表示される場合もあります。
+
 
 Codex Desktop では `/` を入力し、`SQL Server Basic Security Check` または `sql-server-basic-security-check` で候補を絞り込んでスキルを選択します。公式仕様では有効なスキルがスラッシュ候補に表示されます。表示名や候補の形式はクライアントによるため、候補から選択してください。カスタムプロンプトの手動コピーは不要です。
 
@@ -65,16 +95,64 @@ Codex Desktop では `/` を入力し、`SQL Server Basic Security Check` また
 
 確認時は Desktop のバージョン、利用モード、プラグインのバージョン、新規チャットかどうか、候補表示・選択・読み込みの各結果を記録してください。候補が出ない場合は未確認のままとし、その記録を添えて報告してください。
 
-### チェックの実行例
+## サンプルプロンプト
 
-選択後の依頼例:
+上記の `/` または `@` で対象を選択した後に入力します。サーバー名、ポート、ユーザー名は実環境に置き換えてください。`1433` は例であり、実際の待ち受けポートを確認します。パスワードやトークンはプロンプトに含めません。
+
+### ローカルの既定インスタンスを全項目チェック
 
 ```text
-接続先 localhost、Windows 認証で全項目を実行し、HTML レポートを作成してください。
+このサーバーの SQL Server 既定インスタンスを、Windows 認証で全項目チェックしてください。
+実行前に Windows の実行ユーザーを確認し、スキルの前提環境チェックとプレビューを行ってください。
+設定変更は行わず、結果を目次付き HTML レポートにまとめてください。
+```
+
+### 接続先とチェック項目を指定
+
+```text
+接続先 tcp:SQLSERVER01,1433、データベース master、Windows 認証で、
+xp_cmdshell、Ole Automation Procedures、clr enabled をチェックしてください。
+設定変更は行わず、取得値と判定根拠を報告してください。
+```
+
+### SQL 認証で実行
+
+```text
+接続先 tcp:SQLSERVER01,1433、データベース master に、
+SQL 認証のユーザー audit_login で接続し、全項目をチェックしてください。
+パスワードは対話入力します。
+結果を目次付き HTML レポートにまとめてください。
+```
+
+### Microsoft Entra MFA で実行
+
+```text
+接続先 tcp:SQLSERVER01,1433、データベース master に、
+Microsoft Entra MFA のユーザー user@example.com で接続し、全項目をチェックしてください。
+サインイン操作はこちらで行います。
+接続先確認と全チェックは1接続で実行し、HTML レポートを作成してください。
+```
+
+### 接続せずにプレビューだけ確認
+
+```text
+接続先 tcp:SQLSERVER01,1433、データベース master、Windows 認証で全項目をチェックするための
+前提環境チェックとプレビューだけを行ってください。
+SQL Server への接続と診断 SQL の実行は行わないでください。
+```
+
+### ファイルを保存せず、チャットで報告
+
+```text
+接続先 tcp:SQLSERVER01,1433、データベース master、Windows 認証で全項目をチェックしてください。
+レポートファイルは保存せず、結果をチャット内の表で報告してください。
+検出したログは省略せず、本文も表示してください。
 ```
 
 仕様: [Codex スラッシュコマンド](https://learn.chatgpt.com/docs/reference/slash-commands)、[プラグインの配布構成](https://developers.openai.com/plugins/build/plugins)。
 
+
+## その他の呼び出し方法
 
 Claude Code のプラグインコマンド（プラグイン更新後）:
 
